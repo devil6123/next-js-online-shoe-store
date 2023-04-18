@@ -13,7 +13,34 @@ const Header = () => {
     const [showCatMenu,setShowCatMenu]=useState(false);
     const [show,setShow]=useState("translate-y-0");
     const [lastScrolly,setLastScrolly]=useState(0);
-    return <header className={`w-full h-[50px] md:h-[80px] bg-white flex items-center justify-between z-20 sticky
+
+const controlNavbar=()=>{
+if(window.scrollY>200){
+    if(window.scrollY>lastScrolly && !mobileMenu){
+        setShow("-translate-y-[80px]")
+
+    }
+    else{
+        setShow("border border-bottom-[20px]")
+    }
+}
+// else{
+//     setShow("translate-y-0")
+// }
+setLastScrolly(window.scrollY)
+}
+
+
+useEffect(()=>{
+    window.addEventListener("scroll", controlNavbar);
+    return ()=>{
+        window.removeEventListener("scroll",controlNavbar)
+    }
+},[lastScrolly])
+
+
+    return <header 
+    className={`w-full h-[50px] md:h-[80px] bg-white flex items-center justify-between z-20 sticky
     top-0 transition-transform duration-300 ${show}`}> 
     <Wrapper className='h-[50px] flex justify-between items-center'>
 <Link href="/">
